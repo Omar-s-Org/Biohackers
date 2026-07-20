@@ -67,12 +67,18 @@ st.markdown("""
   --radius:14px;
 }
 
-/* Base + Streamlit chrome */
-#MainMenu, footer, header {visibility:hidden;}
-/* ...but keep the sidebar reopen control visible: it lives inside the hidden
-   header, and the uploader lives in the sidebar, so hiding it strands the user
-   with no way to reopen the collapsed rail. */
+/* Base + Streamlit chrome.
+   Do NOT hide the whole header: the collapsed-sidebar reopen control lives in
+   it, and the FASTA uploader lives in the sidebar, so hiding the header strands
+   the user with no way to reopen the rail. Hide only the clutter (main menu,
+   toolbar/Deploy, footer) and make the header transparent so it stays clean. */
+#MainMenu, footer {visibility:hidden;}
+[data-testid="stToolbar"], [data-testid="stStatusWidget"]{ visibility:hidden !important; }
+[data-testid="stHeader"], header{ background:transparent !important; }
+/* Belt-and-suspenders: force any known reopen-control id visible across
+   Streamlit versions. */
 [data-testid="stSidebarCollapsedControl"],
+[data-testid="stExpandSidebarButton"],
 [data-testid="collapsedControl"]{ visibility:visible !important; }
 html, body, [class*="css"]{ font-family:'IBM Plex Sans',sans-serif; }
 .stApp{ background:var(--bg); }
