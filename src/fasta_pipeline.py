@@ -25,6 +25,7 @@ Public entry point:
 
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass
 from functools import lru_cache
@@ -220,7 +221,14 @@ def scan_fasta(fasta_path: str | Path, work_dir: Path | None = None) -> set[str]
     """Run AMRFinderPlus on one FASTA and return the set of AMR Element symbols."""
     fasta_path = Path(fasta_path)
     work_dir = work_dir or fasta_path.parent
-    tsv = genome_reader.run_amrfinder(fasta_path, work_dir, organism="Escherichia")
+    # Give AMRFinderPlus (BLAST/HMMER) all the CPUs the container has, capped at
+    # 8. This is the single-genome live-upload path, so oversubscription across
+    # jobs isn't a concern here — one upload gets the whole box. Halves annotation
+    # time on a multi-vCPU Cloud Run instance vs. the 2-thread batch default.
+    threads = min(os.cpu_count() or 2, 8)
+    tsv = genome_reader.run_amrfinder(
+        fasta_path, work_dir, organism="Escherichia", threads=threads
+    )
     return genome_reader.parse_amrfinder_result(tsv)["genes_found"]
 
 
