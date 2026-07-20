@@ -69,6 +69,11 @@ st.markdown("""
 
 /* Base + Streamlit chrome */
 #MainMenu, footer, header {visibility:hidden;}
+/* ...but keep the sidebar reopen control visible: it lives inside the hidden
+   header, and the uploader lives in the sidebar, so hiding it strands the user
+   with no way to reopen the collapsed rail. */
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"]{ visibility:visible !important; }
 html, body, [class*="css"]{ font-family:'IBM Plex Sans',sans-serif; }
 .stApp{ background:var(--bg); }
 .block-container{ padding:1.4rem 2.2rem 3rem 2.2rem !important; max-width:1500px; }
