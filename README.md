@@ -32,6 +32,10 @@ honest **no-call** when the evidence is not strong enough to answer.
 
 [**Quick start**](#-quick-start-docker) · [**How it works**](#-how-it-works) · [**Results**](#-results) · [**Limitations**](#-scope--limitations) · [**Contributing**](#-contributing)
 
+<img src="assets/genome-firewall.gif" alt="Animation: the bundled genome 562.7624 is scanned and AMRFinderPlus hits appear (aph(6)-Id, aph(3'')-Ib, sul2, blaTEM-1, dfrA8). Verdicts follow: Ampicillin likely to fail, P(resistant) 0.99, known gene blaTEM-1; Ciprofloxacin likely to work, 0.26, statistical association; Trimethoprim no-call, 0.36, inside the 0.30 to 0.70 band." width="100%">
+
+<sub>The real output for the bundled genome <code>562.7624.fna</code>: its AMRFinderPlus hits, then one calibrated verdict per drug, including a no-call.</sub>
+
 </div>
 
 > [!IMPORTANT]
@@ -486,7 +490,8 @@ Standing on the shoulders of:
 <sub>
 
 **Genome Firewall** — decision support, not a decision.<br>
-This is a research prototype. All results must be confirmed with standard laboratory testing.
+This is a research prototype. All results must be confirmed with standard laboratory testing.<br>
+The animation at the top is drawn frame by frame in code: <a href="https://github.com/omarjku/omarjku/tree/main/motion">source</a>.
 
 </sub>
 </div>
